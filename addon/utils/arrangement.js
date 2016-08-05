@@ -140,8 +140,18 @@ function walk(slot, func, path = [0]) {
 }
 
 function findParent(candidates, slot, point) {
-  let candidate = candidates.find(c => {
-    return c.covers(point) && c.canReceiveNode(slot.node);
+  let gatherChildren = (candidates, acc) => {
+    candidates.forEach(candidate => {
+      if (candidate !== undefined) { acc.push(candidate); }
+      if (candidate.children) { gatherChildren(candidate.children, acc); }
+      return acc;
+    });
+    return acc;
+  };
+  let candidatesAndChildren = gatherChildren(candidates, []);
+
+  let candidate = candidatesAndChildren.find(c => {
+    return c.canReceiveNode(slot.node) && c.covers(point);
   });
 
   if (candidate) {
