@@ -177,8 +177,9 @@ export default Mixin.create({
     let model = this.sortableModel;
     let oldParent = this.sortableParent.sortableModel;
     let newParent = receiver.sortableModel;
+    let receiverContext = receiver.sortableContext;
 
-    this.sendAction('onMove', model, { oldParent, newParent, position });
+    this.sendAction('onMove', model, { oldParent, newParent, position, receiverContext });
   },
 
   /**
