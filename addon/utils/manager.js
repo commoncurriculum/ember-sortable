@@ -4,7 +4,7 @@ import willTransition from './will-transition';
 import transitionend from './transitionend';
 import Ember from 'ember';
 
-const { run: { schedule } } = Ember;
+const { run: { schedule, debounce } } = Ember;
 
 /**
   @class Manager
@@ -54,7 +54,7 @@ export default class Manager {
   }
 
   schedule(func) {
-    schedule('afterRender', func);
+    debounce(func, 16);
   }
 
   renderDrag() {
@@ -63,7 +63,7 @@ export default class Manager {
 
     this.arrangement.render();
 
-    style.transform = `translate(${dx}px, ${dy}px)`;
+    style.transform = `translate3d(${dx}px, ${dy}px, 10px)`;
   }
 
   renderDrop() {

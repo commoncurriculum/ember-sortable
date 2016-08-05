@@ -137,7 +137,7 @@ export default class Slot {
   */
   render() {
     let { node, width, height, dx, dy } = this;
-    let transform = `translate(${dx}px, ${dy}px)`;
+    let transform = `translate3d(${dx}px, ${dy}px, 0)`;
 
     if (node.isDestroyed || node.isDestroying) { return; }
 
