@@ -1,4 +1,5 @@
 import Ember from 'ember';
+const { $ } = Ember;
 import Manager from '../utils/manager';
 
 const { A, Mixin, computed } = Ember;
@@ -10,6 +11,15 @@ const { A, Mixin, computed } = Ember;
 export default Mixin.create({
 
   classNameBindings: ['sortableStateClass'],
+
+  /**
+    Selector for the element to use as handle.
+    If unset, the entire element will be used as the handle.
+    @property handle
+    @type String
+    @default null
+  */
+  handle: null,
 
   /**
     @property sortableModel
@@ -84,6 +94,11 @@ export default Mixin.create({
   touchStart(event) {
     this._super(...arguments);
 
+    let handle = this.get('handle');
+    if (handle && !$(event.target).closest(handle).length) {
+      return;
+    }
+
     event.stopPropagation();
 
     this.startSorting(event);
@@ -98,6 +113,11 @@ export default Mixin.create({
 
     if (event.which !== 1) { return; }
     if (event.ctrlKey) { return; }
+
+    let handle = this.get('handle');
+    if (handle && !$(event.target).closest(handle).length) {
+      return;
+    }
 
     event.preventDefault();
     event.stopPropagation();
