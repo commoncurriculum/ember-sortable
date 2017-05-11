@@ -179,7 +179,7 @@ export default class Gesture {
     if (this.isInAnimationFrame === false){
        this.isInAnimationFrame = true;
        window.requestAnimationFrame(() => {
-         this.onUpdate(this);
+         if (this.onUpdate) this.onUpdate(this);
          this.isInAnimationFrame = false;
        });
     };
