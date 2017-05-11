@@ -117,7 +117,7 @@ export default class Gesture {
       this.ox = event.pageX;
       this.oy = event.pageY;
 
-      this.on('mousemove', e => debounce(this.move(e));
+      this.on('mousemove', e => this.move(e));
       this.on('mouseup', () => this.stop());
     }
 
