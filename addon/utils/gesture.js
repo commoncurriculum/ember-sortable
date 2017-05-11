@@ -43,6 +43,7 @@ export default class Gesture {
     this.y = 0;
     this.listeners = [];
     this.isDestroyed = false;
+    this.isInAnimationFrame = false;
   }
 
   /**
@@ -116,7 +117,7 @@ export default class Gesture {
       this.ox = event.pageX;
       this.oy = event.pageY;
 
-      this.on('mousemove', e => this.move(e));
+      this.on('mousemove', e => debounce(this.move(e));
       this.on('mouseup', () => this.stop());
     }
 
@@ -175,7 +176,14 @@ export default class Gesture {
     this.dx = this.x - this.ox;
     this.dy = this.y - this.oy;
 
-    this.onUpdate(this);
+    if (this.isInAnimationFrame === false){
+       this.isInAnimationFrame = true;
+       window.requestAnimationFrame(() => {
+         this.onUpdate(this);
+         this.isInAnimationFrame = false;
+       });
+    };
+
   }
 
   /**
@@ -191,6 +199,7 @@ export default class Gesture {
         break;
     }
   }
+
 
   /**
     @method waitingStop
