@@ -1,6 +1,9 @@
 // Thanks to http://davidwalsh.name/css-animation-callback
 
 function whichTransitionEvent() {
+  if (typeof document === "undefined") {
+    return "";
+  };
   var t;
   var el = document.createElement('fake-element');
   var transitions = {
