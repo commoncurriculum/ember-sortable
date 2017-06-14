@@ -41,6 +41,8 @@ export default class Gesture {
     this.dy = 0;
     this.x = 0;
     this.y = 0;
+    this.clientX = 0;
+    this.clientY = 0;
     this.listeners = [];
     this.isDestroyed = false;
   }
@@ -84,7 +86,22 @@ export default class Gesture {
     @type Number
     @default 0
   */
+  
+  /**
+    Horizontal position relative to the viewport.
 
+    @property clientX
+    @type Number
+    @default 0
+  */
+
+  /**
+    Vertical position relative to the viewport.
+
+    @property clientY
+    @type Number
+    @default 0
+  */
   /**
     @method start
     @param {UIEvent} event
@@ -172,6 +189,8 @@ export default class Gesture {
 
     this.x = (touch || event).pageX;
     this.y = (touch || event).pageY;
+    this.clientX = (touch || event).clientX;
+    this.clientY = (touch || event).clientY;
     this.dx = this.x - this.ox;
     this.dy = this.y - this.oy;
 
