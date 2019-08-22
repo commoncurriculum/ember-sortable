@@ -494,6 +494,7 @@ export default Mixin.create({
     @private
   */
   _complete() {
+    if (this.isDestroyed || this.isDestroying) return;
     this.sendAction('onDragStop', this.get('model'));
     this.set('isDropping', false);
     this.set('wasDropped', true);
