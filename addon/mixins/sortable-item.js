@@ -351,6 +351,7 @@ export default Mixin.create({
     @private
   */
   _complete() {
+    if (this.isDestroyed || this.isDestroying) return;
     this.set('isDropping', false);
     this.set('wasDropped', true);
     this._tellGroup('commit');
