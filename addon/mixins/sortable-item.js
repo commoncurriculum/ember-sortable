@@ -88,6 +88,8 @@ export default Mixin.create({
   isAnimated: computed({
     get() {
       let el = this.$();
+      if (el === undefined || el === null) return 0;
+
       let property = el.css('transition-property');
 
       return /all|transform/.test(property);
@@ -103,6 +105,7 @@ export default Mixin.create({
   transitionDuration: computed({
     get() {
       let el = this.$();
+      if (el === undefined || el === null) return 0;
       let rule = el.css('transition-duration');
       let match = rule.match(/([\d\.]+)([ms]*)/);
 
@@ -151,8 +154,10 @@ export default Mixin.create({
   */
   height: computed({
     get() {
-      let height = this.$().outerHeight();
-      let marginBottom = parseFloat(this.$().css('margin-bottom'));
+      let el = this.$()
+      if (el === undefined || el === null) return 0;
+      let height = el.outerHeight();
+      let marginBottom = parseFloat(el.css('margin-bottom'));
       return height + marginBottom;
     }
   }).volatile(),
