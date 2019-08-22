@@ -103,6 +103,7 @@ export default Mixin.create({
   */
   isAnimated: computed(function() {
     let el = this.$();
+    if (el === undefined || el === null) return false;
     let property = el.css('transition-property');
 
     return /all|transform/.test(property);
@@ -115,6 +116,7 @@ export default Mixin.create({
   */
   transitionDuration: computed(function() {
     let el = this.$();
+    if (el === undefined || el === null) return 0;
     let rule = el.css('transition-duration');
     let match = rule.match(/([\d\.]+)([ms]*)/);
 
@@ -140,7 +142,9 @@ export default Mixin.create({
   x: computed({
     get() {
       if (this._x === undefined) {
-        let marginLeft = parseFloat(this.$().css('margin-left'));
+        let el = this.$()
+        if (el === undefined || el === null) return 0;
+        let marginLeft = parseFloat(el.css('margin-left'));
         this._x = this.element.scrollLeft + this.element.offsetLeft - marginLeft;
       }
 
@@ -182,6 +186,7 @@ export default Mixin.create({
   */
   width: computed(function() {
     let el = this.$();
+    if (el === undefined || el === null) return 0;
     let width = el.outerWidth(true);
 
     width += getBorderSpacing(el).horizontal;
@@ -196,6 +201,7 @@ export default Mixin.create({
   */
   height: computed(function() {
     let el = this.$();
+    if (el === undefined || el === null) return 0;
     let height = el.outerHeight();
 
     let marginBottom = parseFloat(el.css('margin-bottom'));
@@ -401,7 +407,9 @@ export default Mixin.create({
 
     if (groupDirection === 'x') {
       let x = this.get('x');
-      let dx = x - this.element.offsetLeft + parseFloat(this.$().css('margin-left'));
+      let el = this.$()
+      if (el === undefined || el === null) return 0;
+      let dx = x - this.element.offsetLeft + parseFloat(el.css('margin-left'));
 
       this.$().css({
         transform: `translateX(${dx}px)`
@@ -410,8 +418,9 @@ export default Mixin.create({
     if (groupDirection === 'y') {
       let y = this.get('y');
       let dy = y - this.element.offsetTop;
-
-      this.$().css({
+      let el = this.$()
+      if (el === undefined || el === null) return 0;
+      el.css({
         transform: `translateY(${dy}px)`
       });
     }
@@ -539,7 +548,7 @@ function getX(event) {
 */
 function getBorderSpacing(el) {
   el = $(el);
-
+  if (el === undefined || el === null) return 0;
   let css = el.css('border-spacing'); // '0px 0px'
   let [horizontal, vertical] = css.split(' ');
 
