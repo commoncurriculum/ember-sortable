@@ -45,6 +45,7 @@ export default class Gesture {
     this.clientY = 0;
     this.listeners = [];
     this.isDestroyed = false;
+    this.isInAnimationFrame = false;
   }
 
   /**
@@ -194,7 +195,14 @@ export default class Gesture {
     this.dx = this.x - this.ox;
     this.dy = this.y - this.oy;
 
-    this.onUpdate(this);
+    if (this.isInAnimationFrame === false){
+       this.isInAnimationFrame = true;
+       window.requestAnimationFrame(() => {
+         if (this.onUpdate) this.onUpdate(this);
+         this.isInAnimationFrame = false;
+       });
+    };
+
   }
 
   /**
@@ -210,6 +218,7 @@ export default class Gesture {
         break;
     }
   }
+
 
   /**
     @method waitingStop

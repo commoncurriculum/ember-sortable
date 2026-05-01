@@ -11,6 +11,7 @@ export default function transitionDuration(el) {
   $(el).height(); // force re-flow
 
   let value = $(el).css('transition');
+  if (value === null || value === undefined) return 0;
   let match = value.match(/(all|transform) ([\d\.]+)([ms]*)/);
 
   if (match) {

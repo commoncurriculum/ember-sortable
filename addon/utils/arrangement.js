@@ -98,7 +98,7 @@ export default class Arrangement {
   }
 
   walkTree(func) {
-    walk(this.root, func);
+    walk(this.root, func, [0]);
   }
 
   walkPath(path, func) {
@@ -131,7 +131,7 @@ export default class Arrangement {
   }
 }
 
-function walk(slot, func, path = [0]) {
+function walk(slot, func, path) {
   func(slot, path);
 
   slot.children.forEach((child, index) => {
